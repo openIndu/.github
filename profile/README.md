@@ -10,11 +10,42 @@
 
 ## 核心项目 | Projects
 
+### 🌐 社区官网生态
+
+| 仓库 | 技术栈 | 说明 |
+| ---- | ------ | ---- |
+| [openIndu-website](https://github.com/openIndu/openIndu-website) | Monorepo | 聚合仓 — 统一管理后端、管理台、官网前台 |
+| [openIndu-backend](https://github.com/openIndu/openIndu-backend) | FastAPI · PostgreSQL · Milvus | REST API + MCP Server，支持 RAG 知识库检索 |
+| [openIndu-admin](https://github.com/openIndu/openIndu-admin) | React 19 · Tailwind CSS 4 | 统一管理后台 — 用户、文档、软件、系统配置 |
+| [openIndu-portal](https://github.com/openIndu/openIndu-portal) | React 19 · Tailwind CSS 4 | 社区官网前台 — 知识库、软件下载、方案展示 |
+
+### 🏭 工业平台
+
 | 仓库 | 状态 | 说明 |
 | ---- | ---- | ---- |
-| [openIndu-platform](https://github.com/openIndu/openIndu-platform) | 可用 | 企业级工业物联网全栈解决方案 — 设备管理、流程控制、产品追溯一体化 |
-| openIndu-controller | 即将推出 | AI + 运动控制 — 结合 AI 算法优化工业设备运动精度与效率 |
-| openIndu-vision | 即将推出 | AI + 视觉 — 基于深度学习的工业视觉检测，实现产品质量自动化检测 |
+| [openIndu-platform](https://github.com/openIndu/openIndu-platform) | ✅ 可用 | 企业级工业物联网全栈解决方案 — 设备管理、流程控制、产品追溯一体化 |
+| [openIndu-studio](https://github.com/openIndu/openIndu-studio) | ✅ 可用 | AI 工业知识库工作台 — PDF 解析、向量检索、RAG 问答 |
+| [openplc-runtime](https://github.com/openIndu/openplc-runtime) | ✅ 可用 | OpenPLC 运行时适配与扩展 |
+| [openIndu-controller](https://github.com/openIndu/openIndu-controller) | 🚧 即将推出 | AI + 运动控制 — 结合 AI 算法优化工业设备运动精度与效率 |
+| [openIndu-vision](https://github.com/openIndu/openIndu-vision) | 🚧 即将推出 | AI + 视觉 — 基于深度学习的工业视觉检测，实现产品质量自动化检测 |
+
+---
+
+## 技术架构 | Architecture
+
+```
+openindu.com          admin.openindu.com      api.openindu.com
+   │                        │                        │
+   ▼                        ▼                        ▼
+openIndu-portal      openIndu-admin          openIndu-backend
+React 19 + nginx     React 19 + nginx        FastAPI + PostgreSQL
+                                             + Milvus (RAG)
+                                             + 阿里云 OSS
+```
+
+**AI 能力**：BGE-M3 向量模型 + Milvus 向量数据库，支持工业文档 RAG 检索，通过 MCP Server 为 Claude Code 提供知识检索服务。
+
+---
 
 ## 为什么选择开源？ | Why Open Source?
 
@@ -25,10 +56,19 @@
 | **免费使用** | 无需授权费用，降低企业数字化转型成本 |
 | **开放协作** | 欢迎提交 Issue 和 PR，共同打造工业互联网生态 |
 
+---
+
 ## 快速开始 | Quick Start
 
+```bash
+git clone --recurse-submodules https://github.com/openIndu/openIndu-website.git
+cd openIndu-website
+cp .env.example .env
+docker compose up -d --build
+```
+
 - 官网：[www.openindu.com](https://www.openindu.com)
-- 文档：[工业互联网平台文档](https://www.openindu.com/docs)
+- 文档：[www.openindu.com/docs](https://www.openindu.com/docs)
 - Gitee 镜像：[gitee.com/openIndu](https://gitee.com/openIndu)
 
 ## 参与贡献 | Contributing
