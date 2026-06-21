@@ -31,22 +31,27 @@
 
 ---
 
-## 技术架构 | Architecture
+## 服务架构 | Services
 
 ```
-openindu.com          admin.openindu.com      api.openindu.com
-   │                        │                        │
-   ▼                        ▼                        ▼
-openIndu-portal      openIndu-admin          openIndu-backend
-React 19 + nginx     React 19 + nginx        FastAPI + PostgreSQL
-                                             + Milvus (RAG)
-                                             + 阿里云 OSS
+openindu.com          website.openindu.com    api.openindu.com      backend.openindu.com
+   │                        │                       │                       │
+   ▼                        ▼                       ▼                       ▼
+openIndu-portal       openIndu-website        openIndu-backend       openIndu-admin
+社区官网前台           聚合仓首页（项目导航）      REST API + MCP         内部管理后台
+React 19 + nginx      Static Page             FastAPI + PostgreSQL   React 19 + nginx
+                                               + Milvus (RAG)
+                                               + 阿里云 OSS
 ```
 
-**AI 能力**：BGE-M3 向量模型 + Milvus 向量数据库，支持工业文档 RAG 检索，通过 MCP Server 为 Claude Code 提供知识检索服务。
+**域名说明 | Domains**
 
----
-
+| 域名 | 服务 | 说明 |
+| ---- | ---- | ---- |
+| `openindu.com` | openIndu-portal | 社区官网前台 — 知识库、软件下载、方案展示 |
+| `website.openindu.com` | openIndu-website | 聚合仓首页 — 项目导航与文档入口 |
+| `api.openindu.com` | openIndu-backend | REST API + MCP Server — 前后端数据接口与 AI 知识检索 |
+| `backend.openindu.com` | openIndu-admin | 内部管理后台 — 用户管理、文档管理、系统配置（不对外公开） |
 ## 为什么选择开源？ | Why Open Source?
 
 | | |
