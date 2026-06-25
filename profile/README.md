@@ -33,6 +33,40 @@
 
 ## 服务架构 | Services
 
+### 🌐 社区官网生态 | Community Website
+
+聚合仓 **openIndu-website** 通过 git submodule 统一管理前台、后台与后端三个子仓；用户访问 **openIndu-portal** 官网前台，运营通过 **openIndu-admin** 管理后台，二者共用 **openIndu-backend** 提供的 REST API 与 MCP 知识检索，数据落在 PostgreSQL / Milvus 向量库 / 阿里云 OSS。
+
+```mermaid
+flowchart TD
+    website["openIndu-website<br/>聚合仓 · Monorepo (git submodule)"]
+    website -.聚合.-> portal
+    website -.聚合.-> admin
+
+    portal["openIndu-portal<br/>社区官网前台<br/>React 19 + nginx"]
+    admin["openIndu-admin<br/>管理后台<br/>React 19 + nginx"]
+    backend["openIndu-backend<br/>REST API + MCP Server<br/>FastAPI"]
+
+    portal --> backend
+    admin --> backend
+
+    backend --> pg[("PostgreSQL")]
+    backend --> milvus[("Milvus<br/>RAG 向量库")]
+    backend --> oss[("阿里云 OSS")]
+
+    click website "https://github.com/openIndu/openIndu-website" _blank
+    click portal "https://github.com/openIndu/openIndu-portal" _blank
+    click admin "https://github.com/openIndu/openIndu-admin" _blank
+    click backend "https://github.com/openIndu/openIndu-backend" _blank
+```
+
+| 仓库 | 状态 | 职责 |
+| ---- | ---- | ---- |
+| [openIndu-website](https://github.com/openIndu/openIndu-website) | ✅ 可用 | 聚合仓 — submodule 统一管理前台/后台/后端 |
+| [openIndu-portal](https://github.com/openIndu/openIndu-portal) | ✅ 可用 | 社区官网前台 — 知识库、软件下载、方案展示 |
+| [openIndu-admin](https://github.com/openIndu/openIndu-admin) | ✅ 可用 | 管理后台 — 用户、文档、软件、系统配置 |
+| [openIndu-backend](https://github.com/openIndu/openIndu-backend) | ✅ 可用 | REST API + MCP Server — 数据接口与 AI 知识检索 |
+
 ### 🏭 工业平台 | Industrial Platform
 
 **openIndu-studio** 是开发工作流，在开发态把控制程序与配置下发到现场各执行平台；现场有三类并行的执行平台——**openplc-runtime**（软 PLC，逻辑与 IO 控制）、**openIndu-controller**（基于运动控制板卡直接驱动轴运动）、**openIndu-vision**（视觉检测平台，质量自动化判定），三者互不依赖；它们的运行数据统一汇聚到 **openIndu-platform** 工业互联网平台，完成设备管理、流程控制与产品追溯。
@@ -74,41 +108,6 @@ flowchart BT
 | 现场执行 · 运动控制 | [openIndu-controller](https://github.com/openIndu/openIndu-controller) | 🚧 即将推出 | 运动控制平台 — 基于板卡直接驱动轴运动 |
 | 现场执行 · 视觉检测 | [openIndu-vision](https://github.com/openIndu/openIndu-vision) | 🚧 即将推出 | 视觉检测平台 — 工业视觉检测，产品质量自动化判定 |
 | 平台 | [openIndu-platform](https://github.com/openIndu/openIndu-platform) | ✅ 可用 | 工业互联网平台 — 汇聚现场数据，设备管理/流程控制/产品追溯 |
-
-### 🌐 社区官网生态 | Community Website
-
-聚合仓 **openIndu-website** 通过 git submodule 统一管理前台、后台与后端三个子仓；用户访问 **openIndu-portal** 官网前台，运营通过 **openIndu-admin** 管理后台，二者共用 **openIndu-backend** 提供的 REST API 与 MCP 知识检索，数据落在 PostgreSQL / Milvus 向量库 / 阿里云 OSS。
-
-```mermaid
-flowchart TD
-    website["openIndu-website<br/>聚合仓 · Monorepo (git submodule)"]
-    website -.聚合.-> portal
-    website -.聚合.-> admin
-    website -.聚合.-> backend
-
-    portal["openIndu-portal<br/>社区官网前台<br/>React 19 + nginx"]
-    admin["openIndu-admin<br/>管理后台<br/>React 19 + nginx"]
-    backend["openIndu-backend<br/>REST API + MCP Server<br/>FastAPI"]
-
-    portal -- api.openindu.com --> backend
-    admin -- api.openindu.com --> backend
-
-    backend --> pg[("PostgreSQL")]
-    backend --> milvus[("Milvus<br/>RAG 向量库")]
-    backend --> oss[("阿里云 OSS")]
-
-    click website "https://github.com/openIndu/openIndu-website" _blank
-    click portal "https://github.com/openIndu/openIndu-portal" _blank
-    click admin "https://github.com/openIndu/openIndu-admin" _blank
-    click backend "https://github.com/openIndu/openIndu-backend" _blank
-```
-
-| 仓库 | 状态 | 职责 |
-| ---- | ---- | ---- |
-| [openIndu-website](https://github.com/openIndu/openIndu-website) | ✅ 可用 | 聚合仓 — submodule 统一管理前台/后台/后端 |
-| [openIndu-portal](https://github.com/openIndu/openIndu-portal) | ✅ 可用 | 社区官网前台 — 知识库、软件下载、方案展示 |
-| [openIndu-admin](https://github.com/openIndu/openIndu-admin) | ✅ 可用 | 管理后台 — 用户、文档、软件、系统配置 |
-| [openIndu-backend](https://github.com/openIndu/openIndu-backend) | ✅ 可用 | REST API + MCP Server — 数据接口与 AI 知识检索 |
 
 ---
 
