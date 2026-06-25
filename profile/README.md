@@ -129,8 +129,4 @@ flowchart BT
 
 ---
 
-> 📖 **更多详细内容请访问 [www.openindu.com](https://www.openindu.com)**
-
----
-
-© 2026 openIndu Community
+© 2026 openIndu Community · [www.openindu.com](https://www.openindu.com)
