@@ -133,4 +133,4 @@ flowchart BT
 
 ---
 
-© 2026 openIndu Community · [www.openindu.com](https://www.openindu.com)
+© 2026 openIndu Community
