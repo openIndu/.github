@@ -33,35 +33,44 @@
 
 ## 服务架构 | Services
 
+数据从产线 PLC 自下而上流动：现场设备由 **openplc-runtime** 采集，**openIndu-controller**（运动控制）与 **openIndu-vision**（视觉检测）在边缘侧做实时控制与质检，数据上抛到 **openIndu-platform** 工业互联网平台做设备管理、流程控制与产品追溯，再由 **openIndu-studio** 对工业文档与数据做向量检索 / RAG 问答赋能。
+
 ```mermaid
-flowchart TD
-    website["openIndu-website<br/>聚合仓 · Monorepo"]
+flowchart BT
+    subgraph edge["🏭 现场 / 边缘层 · Field & Edge"]
+        plc["openplc-runtime<br/>OpenPLC 运行时<br/>设备数据采集"]
+        controller["openIndu-controller 🚧<br/>AI + 运动控制<br/>实时精度优化"]
+        vision["openIndu-vision 🚧<br/>AI + 视觉检测<br/>质量自动化判定"]
+    end
 
-    website --> portal["openIndu-portal<br/>社区官网前台<br/>React 19 + nginx"]
-    website --> admin["openIndu-admin<br/>内部管理后台<br/>React 19 + nginx"]
-    website --> backend["openIndu-backend<br/>REST API + MCP<br/>FastAPI + PostgreSQL"]
+    subgraph platform["☁️ 平台层 · Industrial IoT Platform"]
+        iiot["openIndu-platform<br/>工业互联网平台<br/>设备管理 · 流程控制 · 产品追溯"]
+    end
 
-    portal -->|api.openindu.com| backend
-    admin -->|api.openindu.com| backend
+    subgraph ai["🤖 AI 赋能层 · AI Enablement"]
+        studio["openIndu-studio<br/>AI 工业知识库工作台<br/>PDF 解析 · 向量检索 · RAG 问答"]
+    end
 
-    backend --> milvus[("Milvus<br/>RAG 向量库")]
-    backend --> pg[("PostgreSQL")]
-    backend --> oss[("阿里云 OSS")]
+    plc -- 设备数据上抛 --> iiot
+    controller -- 运动状态/控制反馈 --> iiot
+    vision -- 检测结果 --> iiot
+    iiot -- 工业数据/文档 --> studio
+    studio -- 知识/决策赋能 --> iiot
 
-    click website "https://github.com/openIndu/openIndu-website" _blank
-    click portal "https://github.com/openIndu/openIndu-portal" _blank
-    click admin "https://github.com/openIndu/openIndu-admin" _blank
-    click backend "https://github.com/openIndu/openIndu-backend" _blank
+    click plc "https://github.com/openIndu/openplc-runtime" _blank
+    click controller "https://github.com/openIndu/openIndu-controller" _blank
+    click vision "https://github.com/openIndu/openIndu-vision" _blank
+    click iiot "https://github.com/openIndu/openIndu-platform" _blank
+    click studio "https://github.com/openIndu/openIndu-studio" _blank
 ```
 
-**域名说明 | Domains**
-
-| 域名 | 服务 | 说明 |
-| ---- | ---- | ---- |
-| `openindu.com` | openIndu-portal | 社区官网前台 — 知识库、软件下载、方案展示 |
-| `website.openindu.com` | openIndu-website | 聚合仓首页 — 项目导航与文档入口 |
-| `api.openindu.com` | openIndu-backend | REST API + MCP Server — 前后端数据接口与 AI 知识检索 |
-| `backend.openindu.com` | openIndu-admin | 内部管理后台 — 用户管理、文档管理、系统配置（不对外公开） |
+| 层级 | 仓库 | 状态 | 职责 |
+| ---- | ---- | ---- | ---- |
+| 现场 / 边缘 | [openplc-runtime](https://github.com/openIndu/openplc-runtime) | ✅ 可用 | OpenPLC 运行时适配与扩展 — 采集产线设备数据 |
+| 现场 / 边缘 | [openIndu-controller](https://github.com/openIndu/openIndu-controller) | 🚧 即将推出 | AI + 运动控制 — 优化设备运动精度与效率 |
+| 现场 / 边缘 | [openIndu-vision](https://github.com/openIndu/openIndu-vision) | 🚧 即将推出 | AI + 视觉 — 工业视觉检测，产品质量自动化判定 |
+| 平台 | [openIndu-platform](https://github.com/openIndu/openIndu-platform) | ✅ 可用 | 工业互联网平台 — 设备管理、流程控制、产品追溯一体化 |
+| AI 赋能 | [openIndu-studio](https://github.com/openIndu/openIndu-studio) | ✅ 可用 | AI 工业知识库工作台 — PDF 解析、向量检索、RAG 问答 |
 
 ---
 
