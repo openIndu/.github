@@ -33,15 +33,25 @@
 
 ## 服务架构 | Services
 
-```
-openindu.com          website.openindu.com    api.openindu.com      backend.openindu.com
-   │                        │                       │                       │
-   ▼                        ▼                       ▼                       ▼
-openIndu-portal       openIndu-website        openIndu-backend       openIndu-admin
-社区官网前台           聚合仓首页（项目导航）      REST API + MCP         内部管理后台
-React 19 + nginx      Static Page             FastAPI + PostgreSQL   React 19 + nginx
-                                               + Milvus (RAG)
-                                               + 阿里云 OSS
+```mermaid
+flowchart TD
+    website["openIndu-website<br/>聚合仓 · Monorepo"]
+
+    website --> portal["openIndu-portal<br/>社区官网前台<br/>React 19 + nginx"]
+    website --> admin["openIndu-admin<br/>内部管理后台<br/>React 19 + nginx"]
+    website --> backend["openIndu-backend<br/>REST API + MCP<br/>FastAPI + PostgreSQL"]
+
+    portal -->|api.openindu.com| backend
+    admin -->|api.openindu.com| backend
+
+    backend --> milvus[("Milvus<br/>RAG 向量库")]
+    backend --> pg[("PostgreSQL")]
+    backend --> oss[("阿里云 OSS")]
+
+    click website "https://github.com/openIndu/openIndu-website" _blank
+    click portal "https://github.com/openIndu/openIndu-portal" _blank
+    click admin "https://github.com/openIndu/openIndu-admin" _blank
+    click backend "https://github.com/openIndu/openIndu-backend" _blank
 ```
 
 **域名说明 | Domains**
@@ -52,6 +62,9 @@ React 19 + nginx      Static Page             FastAPI + PostgreSQL   React 19 + 
 | `website.openindu.com` | openIndu-website | 聚合仓首页 — 项目导航与文档入口 |
 | `api.openindu.com` | openIndu-backend | REST API + MCP Server — 前后端数据接口与 AI 知识检索 |
 | `backend.openindu.com` | openIndu-admin | 内部管理后台 — 用户管理、文档管理、系统配置（不对外公开） |
+
+---
+
 ## 为什么选择开源？ | Why Open Source?
 
 | | |
@@ -62,19 +75,6 @@ React 19 + nginx      Static Page             FastAPI + PostgreSQL   React 19 + 
 | **开放协作** | 欢迎提交 Issue 和 PR，共同打造工业互联网生态 |
 
 ---
-
-## 快速开始 | Quick Start
-
-```bash
-git clone --recurse-submodules https://github.com/openIndu/openIndu-website.git
-cd openIndu-website
-cp .env.example .env
-docker compose up -d --build
-```
-
-- 官网：[www.openindu.com](https://www.openindu.com)
-- 文档：[www.openindu.com/docs](https://www.openindu.com/docs)
-- Gitee 镜像：[gitee.com/openIndu](https://gitee.com/openIndu)
 
 ## 参与贡献 | Contributing
 
