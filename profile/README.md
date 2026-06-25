@@ -33,6 +33,8 @@
 
 ## 服务架构 | Services
 
+### 🏭 工业平台 | Industrial Platform
+
 数据从产线 PLC 自下而上流动：现场设备由 **openplc-runtime** 采集，**openIndu-controller**（运动控制）与 **openIndu-vision**（视觉检测）在边缘侧做实时控制与质检，数据上抛到 **openIndu-platform** 工业互联网平台做设备管理、流程控制与产品追溯，再由 **openIndu-studio** 对工业文档与数据做向量检索 / RAG 问答赋能。
 
 ```mermaid
@@ -72,6 +74,41 @@ flowchart BT
 | 平台 | [openIndu-platform](https://github.com/openIndu/openIndu-platform) | ✅ 可用 | 工业互联网平台 — 设备管理、流程控制、产品追溯一体化 |
 | AI 赋能 | [openIndu-studio](https://github.com/openIndu/openIndu-studio) | ✅ 可用 | AI 工业知识库工作台 — PDF 解析、向量检索、RAG 问答 |
 
+### 🌐 社区官网生态 | Community Website
+
+聚合仓 **openIndu-website** 通过 git submodule 统一管理前台、后台与后端三个子仓；用户访问 **openIndu-portal** 官网前台，运营通过 **openIndu-admin** 管理后台，二者共用 **openIndu-backend** 提供的 REST API 与 MCP 知识检索，数据落在 PostgreSQL / Milvus 向量库 / 阿里云 OSS。
+
+```mermaid
+flowchart TD
+    website["openIndu-website<br/>聚合仓 · Monorepo (git submodule)"]
+    website -.聚合.-> portal
+    website -.聚合.-> admin
+    website -.聚合.-> backend
+
+    portal["openIndu-portal<br/>社区官网前台<br/>React 19 + nginx"]
+    admin["openIndu-admin<br/>管理后台<br/>React 19 + nginx"]
+    backend["openIndu-backend<br/>REST API + MCP Server<br/>FastAPI"]
+
+    portal -- api.openindu.com --> backend
+    admin -- api.openindu.com --> backend
+
+    backend --> pg[("PostgreSQL")]
+    backend --> milvus[("Milvus<br/>RAG 向量库")]
+    backend --> oss[("阿里云 OSS")]
+
+    click website "https://github.com/openIndu/openIndu-website" _blank
+    click portal "https://github.com/openIndu/openIndu-portal" _blank
+    click admin "https://github.com/openIndu/openIndu-admin" _blank
+    click backend "https://github.com/openIndu/openIndu-backend" _blank
+```
+
+| 仓库 | 状态 | 职责 |
+| ---- | ---- | ---- |
+| [openIndu-website](https://github.com/openIndu/openIndu-website) | ✅ 可用 | 聚合仓 — submodule 统一管理前台/后台/后端 |
+| [openIndu-portal](https://github.com/openIndu/openIndu-portal) | ✅ 可用 | 社区官网前台 — 知识库、软件下载、方案展示 |
+| [openIndu-admin](https://github.com/openIndu/openIndu-admin) | ✅ 可用 | 管理后台 — 用户、文档、软件、系统配置 |
+| [openIndu-backend](https://github.com/openIndu/openIndu-backend) | ✅ 可用 | REST API + MCP Server — 数据接口与 AI 知识检索 |
+
 ---
 
 ## 为什么选择开源？ | Why Open Source?
@@ -89,6 +126,10 @@ flowchart BT
 
 欢迎任何形式的贡献——无论是提交 Issue、发起 PR，还是完善文档。  
 请查看 [community](https://github.com/openIndu/community) 仓库了解社区规范与贡献指南。
+
+---
+
+> 📖 **更多详细内容请访问 [www.openindu.com](https://www.openindu.com)**
 
 ---
 
