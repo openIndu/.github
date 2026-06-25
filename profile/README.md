@@ -35,7 +35,7 @@
 
 ### 🏭 工业平台 | Industrial Platform
 
-**openIndu-studio** 是开发工作流，在开发态把控制程序与配置下发到现场各执行平台；现场有两条**并行的控制路径**——**openplc-runtime**（软 PLC，逻辑与 IO 控制）和 **openIndu-controller**（基于运动控制板卡直接驱动轴运动），二者互不依赖、各自直驱设备；**openIndu-vision**（视觉检测平台）一边把检测结果实时反馈给 openIndu-controller 引导轴运动，一边把质检数据上抛平台；三类现场平台的运行数据统一汇聚到 **openIndu-platform** 工业互联网平台，完成设备管理、流程控制与产品追溯。
+**openIndu-studio** 是开发工作流，在开发态把控制程序与配置下发到现场各执行平台；现场有三类并行的执行平台——**openplc-runtime**（软 PLC，逻辑与 IO 控制）、**openIndu-controller**（基于运动控制板卡直接驱动轴运动）、**openIndu-vision**（视觉检测平台，质量自动化判定），三者互不依赖；它们的运行数据统一汇聚到 **openIndu-platform** 工业互联网平台，完成设备管理、流程控制与产品追溯。
 
 ```mermaid
 flowchart BT
@@ -55,13 +55,6 @@ flowchart BT
     studio -. 程序/配置下发 .-> controller
     studio -. 程序/配置下发 .-> vision
 
-    %% 运行态：现场设备直驱（双向）
-    plc <-- 逻辑/IO 控制 --> dev1([产线设备])
-    controller <-- 运动指令/轴反馈 --> dev2([运动轴])
-
-    %% 视觉引导运动
-    vision -- 检测结果引导 --> controller
-
     %% 运行数据上抛平台
     plc -- 设备数据 --> iiot
     controller -- 运动数据 --> iiot
@@ -77,9 +70,9 @@ flowchart BT
 | 定位 | 仓库 | 状态 | 职责 |
 | ---- | ---- | ---- | ---- |
 | 开发工作流 | [openIndu-studio](https://github.com/openIndu/openIndu-studio) | ✅ 可用 | 开发态工作流 — 程序开发、配置下发到现场各执行平台 |
-| 现场执行 · 软 PLC | [openplc-runtime](https://github.com/openIndu/openplc-runtime) | ✅ 可用 | 软 PLC 运行时 — 逻辑与 IO 控制，直驱产线设备 |
+| 现场执行 · 软 PLC | [openplc-runtime](https://github.com/openIndu/openplc-runtime) | ✅ 可用 | 软 PLC 运行时 — 逻辑与 IO 控制 |
 | 现场执行 · 运动控制 | [openIndu-controller](https://github.com/openIndu/openIndu-controller) | 🚧 即将推出 | 运动控制平台 — 基于板卡直接驱动轴运动 |
-| 现场执行 · 视觉检测 | [openIndu-vision](https://github.com/openIndu/openIndu-vision) | 🚧 即将推出 | 视觉检测平台 — 质量自动化判定，结果引导运动控制 |
+| 现场执行 · 视觉检测 | [openIndu-vision](https://github.com/openIndu/openIndu-vision) | 🚧 即将推出 | 视觉检测平台 — 工业视觉检测，产品质量自动化判定 |
 | 平台 | [openIndu-platform](https://github.com/openIndu/openIndu-platform) | ✅ 可用 | 工业互联网平台 — 汇聚现场数据，设备管理/流程控制/产品追溯 |
 
 ### 🌐 社区官网生态 | Community Website
