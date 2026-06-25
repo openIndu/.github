@@ -35,44 +35,52 @@
 
 ### 🏭 工业平台 | Industrial Platform
 
-数据从产线 PLC 自下而上流动：现场设备由 **openplc-runtime** 采集，**openIndu-controller**（运动控制）与 **openIndu-vision**（视觉检测）在边缘侧做实时控制与质检，数据上抛到 **openIndu-platform** 工业互联网平台做设备管理、流程控制与产品追溯，再由 **openIndu-studio** 对工业文档与数据做向量检索 / RAG 问答赋能。
+**openIndu-studio** 是开发工作流，在开发态把控制程序与配置下发到现场各执行平台；现场有两条**并行的控制路径**——**openplc-runtime**（软 PLC，逻辑与 IO 控制）和 **openIndu-controller**（基于运动控制板卡直接驱动轴运动），二者互不依赖、各自直驱设备；**openIndu-vision**（视觉检测平台）一边把检测结果实时反馈给 openIndu-controller 引导轴运动，一边把质检数据上抛平台；三类现场平台的运行数据统一汇聚到 **openIndu-platform** 工业互联网平台，完成设备管理、流程控制与产品追溯。
 
 ```mermaid
 flowchart BT
-    subgraph edge["🏭 现场 / 边缘层 · Field & Edge"]
-        plc["openplc-runtime<br/>OpenPLC 运行时<br/>设备数据采集"]
-        controller["openIndu-controller 🚧<br/>AI + 运动控制<br/>实时精度优化"]
-        vision["openIndu-vision 🚧<br/>AI + 视觉检测<br/>质量自动化判定"]
+    studio["openIndu-studio<br/>开发工作流<br/>程序开发 · 配置下发"]
+
+    subgraph field["🏭 现场执行层 · Field Execution"]
+        direction LR
+        plc["openplc-runtime<br/>软 PLC<br/>逻辑 · IO 控制"]
+        controller["openIndu-controller 🚧<br/>运动控制平台<br/>板卡直驱轴运动"]
+        vision["openIndu-vision 🚧<br/>视觉检测平台<br/>质量自动化判定"]
     end
 
-    subgraph platform["☁️ 平台层 · Industrial IoT Platform"]
-        iiot["openIndu-platform<br/>工业互联网平台<br/>设备管理 · 流程控制 · 产品追溯"]
-    end
+    iiot["openIndu-platform<br/>工业互联网平台<br/>设备管理 · 流程控制 · 产品追溯"]
 
-    subgraph ai["🤖 AI 赋能层 · AI Enablement"]
-        studio["openIndu-studio<br/>AI 工业知识库工作台<br/>PDF 解析 · 向量检索 · RAG 问答"]
-    end
+    %% 开发态：下发程序/配置（虚线）
+    studio -. 程序/配置下发 .-> plc
+    studio -. 程序/配置下发 .-> controller
+    studio -. 程序/配置下发 .-> vision
 
-    plc -- 设备数据上抛 --> iiot
-    controller -- 运动状态/控制反馈 --> iiot
-    vision -- 检测结果 --> iiot
-    iiot -- 工业数据/文档 --> studio
-    studio -- 知识/决策赋能 --> iiot
+    %% 运行态：现场设备直驱（双向）
+    plc <-- 逻辑/IO 控制 --> dev1([产线设备])
+    controller <-- 运动指令/轴反馈 --> dev2([运动轴])
 
+    %% 视觉引导运动
+    vision -- 检测结果引导 --> controller
+
+    %% 运行数据上抛平台
+    plc -- 设备数据 --> iiot
+    controller -- 运动数据 --> iiot
+    vision -- 质检数据 --> iiot
+
+    click studio "https://github.com/openIndu/openIndu-studio" _blank
     click plc "https://github.com/openIndu/openplc-runtime" _blank
     click controller "https://github.com/openIndu/openIndu-controller" _blank
     click vision "https://github.com/openIndu/openIndu-vision" _blank
     click iiot "https://github.com/openIndu/openIndu-platform" _blank
-    click studio "https://github.com/openIndu/openIndu-studio" _blank
 ```
 
-| 层级 | 仓库 | 状态 | 职责 |
+| 定位 | 仓库 | 状态 | 职责 |
 | ---- | ---- | ---- | ---- |
-| 现场 / 边缘 | [openplc-runtime](https://github.com/openIndu/openplc-runtime) | ✅ 可用 | OpenPLC 运行时适配与扩展 — 采集产线设备数据 |
-| 现场 / 边缘 | [openIndu-controller](https://github.com/openIndu/openIndu-controller) | 🚧 即将推出 | AI + 运动控制 — 优化设备运动精度与效率 |
-| 现场 / 边缘 | [openIndu-vision](https://github.com/openIndu/openIndu-vision) | 🚧 即将推出 | AI + 视觉 — 工业视觉检测，产品质量自动化判定 |
-| 平台 | [openIndu-platform](https://github.com/openIndu/openIndu-platform) | ✅ 可用 | 工业互联网平台 — 设备管理、流程控制、产品追溯一体化 |
-| AI 赋能 | [openIndu-studio](https://github.com/openIndu/openIndu-studio) | ✅ 可用 | AI 工业知识库工作台 — PDF 解析、向量检索、RAG 问答 |
+| 开发工作流 | [openIndu-studio](https://github.com/openIndu/openIndu-studio) | ✅ 可用 | 开发态工作流 — 程序开发、配置下发到现场各执行平台 |
+| 现场执行 · 软 PLC | [openplc-runtime](https://github.com/openIndu/openplc-runtime) | ✅ 可用 | 软 PLC 运行时 — 逻辑与 IO 控制，直驱产线设备 |
+| 现场执行 · 运动控制 | [openIndu-controller](https://github.com/openIndu/openIndu-controller) | 🚧 即将推出 | 运动控制平台 — 基于板卡直接驱动轴运动 |
+| 现场执行 · 视觉检测 | [openIndu-vision](https://github.com/openIndu/openIndu-vision) | 🚧 即将推出 | 视觉检测平台 — 质量自动化判定，结果引导运动控制 |
+| 平台 | [openIndu-platform](https://github.com/openIndu/openIndu-platform) | ✅ 可用 | 工业互联网平台 — 汇聚现场数据，设备管理/流程控制/产品追溯 |
 
 ### 🌐 社区官网生态 | Community Website
 
