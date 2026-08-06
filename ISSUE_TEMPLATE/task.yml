@@ -1,0 +1,42 @@
+name: "Task / 任务"
+description: 创建一个开发任务
+title: "[Task] "
+labels: ["task"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        请尽量填写完整，帮助团队快速理解和排期。
+  - type: textarea
+    id: description
+    attributes:
+      label: 任务描述
+      description: 清晰描述需要完成的工作内容
+      placeholder: 例：为设备管理模块添加批量导入功能
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: 验收标准
+      description: 定义任务完成的验收条件
+      placeholder: |
+        - [ ] 支持 Excel 文件批量导入
+        - [ ] 导入失败时给出明确错误提示
+    validations:
+      required: true
+  - type: dropdown
+    id: priority
+    attributes:
+      label: 优先级
+      options:
+        - 高 / High
+        - 中 / Medium
+        - 低 / Low
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: 备注
+      description: 相关文档、参考链接或其他说明（可选）
