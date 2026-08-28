@@ -1,96 +1,118 @@
 # openIndu
 
-**One Stack, Open Manufacturing.**
+**An open-source, full-chain engineering tool stack for industrial automation and non-standard equipment.**
 
-*The End-to-End Open Operating System for Industrial Automation.*
+> Share process knowledge · Build tools together · Reuse engineering experience · Connect vision, control, and data
 
-> From process constraints to a closed production data loop — one stack, zero vendor lock-in.
-
-**[openindu.com](https://www.openindu.com)** · [中文版](README_ZH.md) · Apache-2.0 · Open Source · Open Collaboration
+[Website](https://www.openindu.com/) · [Forum](https://forum.openindu.com/) · [中文](README_ZH.md) · [Community](https://github.com/openIndu/community)
 
 ---
 
-## Not Another Tool. The OS Industrial Automation Never Had.
+## Why openIndu
 
-Industrial automation is not short of tools. It is short of the thing that connects them.
+Industrial engineering knowledge is often scattered across personal folders, project chats, vendor-specific tools, and one-off delivery code. A problem may be solved on one line, then rediscovered from scratch on the next.
 
-- **Process Knowledge** — the process window lives in a senior engineer's head. When they leave, nobody can say why the parameters are what they are.
-- **Engineering Generation** — electrical drawings, BOMs, IO tables and PLC code live in four tools that don't talk to each other. Change one, update four by hand.
-- **Cross-Brand Execution** — switch PLC brands and you rewrite everything. Your software is hostage to a hardware vendor's ecosystem.
-- **Collection & Data** — runtime data stays locked inside the controller. Getting it out means buying another system.
-- **Insight** — yield drops and nobody can trace the cause. Even when they can, the finding never reaches the next design.
+openIndu is building a place where engineers can:
 
-Every stage has tools. No stage connects to the next. **That gap is what an operating system fills** — shared abstractions, a common driver model, one set of interfaces that turn separate parts into a system.
+- **discuss process and field problems with context** — equipment, versions, constraints, validation, and known boundaries;
+- **co-develop open engineering tools** — for electrical design, control, vision, connectivity, and industrial data;
+- **turn reusable experience into shared assets** — guides, templates, mappings, examples, and reproducible tests.
 
-**openIndu is the Linux of industrial automation.**
-
-| Linux | openIndu |
-|-------|----------|
-| Open source — full source, anywhere, anyone, auditable | **Apache-2.0 across the whole chain** — electrical → BOM → IO → PLC/HMI, every step readable and verifiable |
-| Hardware abstraction — apps don't care about Intel vs AMD | **Cross-brand neutrality** — one design targets Siemens, Mitsubishi, Omron, Keyence, Inovance |
-| Driver model — one driver, every app shares it | **Open brand-mapping layer** — one engineer contributes one mapping, the whole community reuses it |
-| Filesystem — data stored, retrieved, shared in structured form | **Process constraint library** — process windows, defect signatures, cycle models: structured, searchable, verifiable |
-| Distro + package manager — a complete system, ready to run | **Industry template library** — panel, automotive, battery workstation templates: install and adapt |
-
-**One stack. From process knowledge to production insight.**
+The community is for people who build, integrate, commission, and maintain industrial equipment. We value reproducible engineering evidence over slogans and vendor-neutral collaboration over lock-in.
 
 ---
 
-## Architecture
+## One community, three ways to participate
+
+| Area | What happens there | Start here |
+| --- | --- | --- |
+| **Forum — knowledge** | Field questions, process flows, selection methods, validation plans, failure records, and industry observations | [forum.openindu.com](https://forum.openindu.com/) |
+| **Code — tools** | Open projects that connect engineering design, workstation applications, vision, control, CIM, and industrial data | [github.com/openIndu](https://github.com/openIndu) |
+| **Engineering collaboration** | Issues, reviews, examples, templates, and problem-driven cooperation around real equipment work | [Community repository](https://github.com/openIndu/community) |
+
+Knowledge does not have to arrive as a finished answer. Forum topics may remain open for continued discussion as new environments, evidence, and constraints appear.
+
+---
+
+## What is in the forum
+
+The [openIndu Forum](https://forum.openindu.com/) is live and currently organized around six areas:
+
+- [**Industrial control**](https://forum.openindu.com/c/industrial-control/5) — PLC, DCS, motion, servo, HMI/SCADA, fieldbus, and industrial protocols;
+- [**Automation**](https://forum.openindu.com/c/automation/6) — non-standard equipment, line integration, machine vision, host applications, IIoT, and edge computing;
+- [**Manufacturing process**](https://forum.openindu.com/c/process/7) — process flows, equipment steps, parameters, inspection, defects, and yield improvement;
+- [**Industry insights**](https://forum.openindu.com/c/9) — companies, product portfolios, industrial software, and technology evolution;
+- [**Community help**](https://forum.openindu.com/c/community/8) — questions, careers, learning resources, and collaboration;
+- [**Feedback and suggestions**](https://forum.openindu.com/c/feedback/2) — forum feedback, feature requests, bugs, categories, and tags.
+
+Published process articles currently cover display panels, semiconductors, batteries, automotive electronics, industrial robots, and photovoltaic modules. Content coverage is not a claim that openIndu already provides validated delivery capability in every industry.
+
+---
+
+## Project map
+
+The project map connects five directions. It describes how the parts relate; it is **not** a claim that every direction is production-ready.
 
 ```mermaid
-flowchart LR
-    A[Process<br/>Knowledge] --> B[Engineering<br/>Generation]
-    B --> C[Cross-Brand<br/>Execution]
-    C --> D[Collection<br/>& Data]
-    D --> E[Insight]
-    E -.->|refined constraints| A
+flowchart TB
+    F[Forum<br/>Process knowledge]
+    V[Vision<br/>Inspection and orchestration]
+    S[Studio<br/>Engineering assets]
+    C[CIM + Platform<br/>Connectivity and data]
+    P[PLC Experiment<br/>Open control research]
+
+    F --> S
+    V <--> S
+    S <--> C
+    S --> P
 ```
 
-| Node | Role | Where |
-|------|------|-------|
-| **Process Knowledge** | Process windows · defect signatures · cycle models | [studio](https://github.com/openIndu/openIndu-studio) |
-| **Engineering Generation** | Electrical → BOM → IO → PLC/HMI · cross-brand generation | [studio](https://github.com/openIndu/openIndu-studio) |
-| **Cross-Brand Execution** | Siemens / Mitsubishi / Omron / Keyence / Inovance — one design, any brand on the floor | [studio](https://github.com/openIndu/openIndu-studio) output |
-| **Collection & Data** | Protocols via [Apache PLC4X](https://plc4x.apache.org/) — S7 · Modbus · EtherNet/IP · ADS · OPC-UA — into the time-series store | [platform](https://github.com/openIndu/openIndu-platform) |
-| **Insight** | BI · OEE · yield analysis | [admin](https://github.com/openIndu/openIndu-admin) |
+| Direction | Purpose | Current public entry |
+| --- | --- | --- |
+| **Forum** | Community-owned process knowledge and engineering discussion | [openIndu Forum](https://forum.openindu.com/) |
+| **Vision** | Cross-camera and cross-algorithm inspection workflow exploration | Follow the organization repositories and roadmap |
+| **Studio** | Engineering assets and generation workflows | [openIndu-studio](https://github.com/openIndu/openIndu-studio) |
+| **CIM + Platform** | Equipment connectivity, manufacturing integration, data, and traceability | [openIndu-platform](https://github.com/openIndu/openIndu-platform) |
+| **PLC Experiment** | RK3588 + openEuler + RTOS/real-time Linux + EtherCAT exploration | [Technical discussion](https://forum.openindu.com/t/74) |
 
-**The closed loop**: process constraints bound what gets generated → programs run on the floor, whatever the brand → data flows back → analysis refines the constraints → the next design starts from a better baseline.
+[openindu-station](https://github.com/openIndu/openindu-station) is the cross-cutting workstation application: it brings engineering assets, motion, vision, process execution, and data integration closer to equipment delivery.
 
-Every layer has its own contributor persona. Process engineers own the knowledge layer. Electrical engineers own templates and brand mappings. Data engineers own pipelines and dashboards. **You don't need to write Python to contribute** — one brand mapping, one IO table, one process window is a real contribution.
+### PLC experiment boundary
 
----
-
-## Core Projects
-
-### [openIndu-studio](https://github.com/openIndu/openIndu-studio) — Engineering + Process Knowledge
-
-[![Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue)](https://github.com/openIndu/openIndu-studio/blob/main/LICENSE)
-
-**AI-assisted full-chain industrial automation toolchain.** Electrical module → circuit diagram → BOM → IO address table → PLC program → HMI — six steps, one tool, multi-brand output (Siemens / Mitsubishi / Omron / Keyence / Inovance). The process constraint library acts as the guardrail: generation stays inside the process window. Every artifact ships with an explanation and a diff — because code you can't verify is code you can't run.
-
-### [openIndu-platform](https://github.com/openIndu/openIndu-platform) — Connectivity + Data
-
-[![Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue)](https://github.com/openIndu/openIndu-platform/blob/main/LICENSE)
-
-**Industrial IoT platform.** Device connectivity, data acquisition, line monitoring, product traceability — the plug-and-play data plane for non-standard automation lines. Protocol handling is built on **[Apache PLC4X](https://plc4x.apache.org/)** rather than reinvented: S7, Modbus, EtherNet/IP, ADS, OPC-UA and more, from one Apache-2.0 driver stack. Collected data lands in the time-series store, becoming the raw material for analytics and process refinement.
-
-### [openindu-station](https://github.com/openIndu/openindu-station) — Workstation Software
-
-[![Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue)](https://github.com/openIndu/openindu-station/blob/main/LICENSE)
-
-**Station control application (C#).** Motion control · machine vision · barcode scanning · dispensing · laser — the software foundation for non-standard automation workstations. Buying the hardware was never the hard part; making it work together is.
+The open PLC direction is currently **Experiment / E0**. It is a research route and experimental plan, not a production-ready controller. Real-time behavior, hardware-in-the-loop testing, long-duration stability, fault recovery, compatibility, and safety boundaries still require evidence. It must not be presented as a replacement for commercial hardware PLCs.
 
 ---
 
-## Contributing
+## How we describe maturity
 
-Open source. Open standards. Open collaboration.
+We separate plans from evidence. Public project and capability descriptions should use explicit states such as:
 
-Contributions welcome — issues, PRs, docs, and especially **templates, brand mappings, IO tables, process parameters, defect signatures**. The smallest useful contribution is one data entry, not a pull request full of code.
+- **Available** — usable with a documented entry point;
+- **Preview** — accessible for early evaluation, with known limitations;
+- **Experiment** — a technical hypothesis or prototype under validation;
+- **Planned** — accepted direction without a usable implementation yet;
+- **Content** — published knowledge, not software capability.
 
-[community](https://github.com/openIndu/community) → guidelines · contributor guide · governance
+Repository code, a forum article, and production evidence are different things. Each repository's README, releases, tests, and license remain the authoritative source for that project's current state.
 
 ---
 
-© 2026 openIndu Community · Apache-2.0 · [www.openindu.com](https://www.openindu.com)
+## Contribute
+
+You do not need a large pull request to contribute. Useful contributions include:
+
+- a field question with equipment, software/firmware version, symptoms, attempted methods, and unresolved points;
+- a reproducible test, failure record, or compatibility note;
+- an ESI configuration, device mapping, engineering template, or example;
+- a correction that clarifies where an article or design does **not** apply;
+- code, documentation, issue triage, and review.
+
+Before sharing field material, remove customer names, personal information, accounts, IP addresses, credentials, confidential recipes, and anything you are not authorized to publish. Safety circuits and hazardous operations must not be treated as copy-and-run instructions without independent validation.
+
+Start with the [forum](https://forum.openindu.com/), read the [community contribution guide](https://github.com/openIndu/community), or explore the [openIndu repositories](https://github.com/openIndu).
+
+---
+
+<sub>Licenses are defined by each repository's LICENSE file. Project status and evidence may change; verify the linked repository, release, tests, and documentation before use.</sub>
+
+<sub>© 2026 openIndu Community</sub>
