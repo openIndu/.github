@@ -72,7 +72,7 @@ flowchart TB
 | **Forum** | Community-owned process knowledge and engineering discussion | [openIndu Forum](https://forum.openindu.com/) |
 | **Vision** | Cross-camera and cross-algorithm inspection workflow exploration | Follow the organization repositories and roadmap |
 | **Studio** | Engineering assets and generation workflows | [openindu-studio](https://github.com/openIndu/openindu-studio) |
-| **CIM + Platform** | Equipment connectivity, manufacturing integration, data, and traceability | [openIndu-platform](https://github.com/openIndu/openIndu-platform) |
+| **CIM + Platform** | Equipment connectivity, manufacturing integration, data, and traceability | [openindu-platform](https://github.com/openIndu/openindu-platform) |
 | **PLC Experiment** | RK3588 + openEuler + RTOS/real-time Linux + EtherCAT exploration | [Technical discussion](https://forum.openindu.com/t/74) |
 
 [openindu-station](https://github.com/openIndu/openindu-station) is the cross-cutting workstation application: it brings engineering assets, motion, vision, process execution, and data integration closer to equipment delivery.
