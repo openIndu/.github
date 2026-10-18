@@ -71,7 +71,7 @@ flowchart TB
 | --- | --- | --- |
 | **Forum** | 社区共同沉淀工艺知识与工程讨论 | [openIndu 论坛](https://forum.openindu.com/) |
 | **Vision** | 跨相机、跨算法的视觉检测工作流探索 | 关注组织仓库与路线图 |
-| **Studio** | 工程资产与生成工作流 | [openIndu-studio](https://github.com/openIndu/openIndu-studio) |
+| **Studio** | 工程资产与生成工作流 | [openindu-studio](https://github.com/openIndu/openindu-studio) |
 | **CIM + Platform** | 设备互联、制造系统集成、数据与追溯 | [openIndu-platform](https://github.com/openIndu/openIndu-platform) |
 | **PLC Experiment** | RK3588 + openEuler + RTOS/实时 Linux + EtherCAT 技术探索 | [技术讨论](https://forum.openindu.com/t/74) |
 
